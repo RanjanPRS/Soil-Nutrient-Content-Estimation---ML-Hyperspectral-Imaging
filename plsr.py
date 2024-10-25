@@ -66,3 +66,5 @@ if df.shape[0] > 0:
     plt.title("True vs. Predicted OC Values")
     plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)  # Diagonal line
     plt.show()
+else:
+    print("No valid samples left after processing. Please check your data.")
