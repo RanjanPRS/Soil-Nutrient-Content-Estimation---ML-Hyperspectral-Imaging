@@ -1,0 +1,120 @@
+TITLE:
+Integrating Soil Spectral Library and PRISMA Data to Estimate Soil Organic Carbon in Crop Lands
+
+AUTHROS:
+Bonthu Sandeep Reddy and H. R. Shwetha
+
+METHODOLOGY:
+Data Integration: A synthesized soil spectral library (SSL) was created using controlled lab conditions to represent soil organic carbon (SOC) variability.Hyperspectral data from the PRISMA satellite was resampled to match the SSL, and machine learning models (PLSR, SVR, RF, etc.) were used for SOC prediction.
+
+Validation: SOC predictions were validated with ground-truth samples, using metrics like R² and RMSE to assess model accuracy.
+
+
+ADVANTAGES:
+>Reduces the need for extensive field sampling.
+>High R² values indicate strong SOC prediction accuracy.
+>Can be applied to different regions and soil types.
+
+DISADVANTAGESS:
+>May not fully capture field condition variability.
+>Requires careful data preprocessing.
+>May need additional calibration for different regions.
+
+TITLE: 
+MONITORING SOIL PROPERTIES USING ENMAP SPACEBORNE IMAGING
+SPECTROSCOPY MISSION 
+
+AUTHORS:
+Sabine Chabrillat, Robert Milewski, Kathrin Ward, Saskia Foerster, Stephane Guillaso1, Christopher Loy, Eyal Ben-Dor, Nikos Tziolas4, Thomas Schmid, Bas van Wesemael, José A.M.Demattê
+
+METHODOLOGY: 	
+The study uses the EnMAP spaceborne imaging spectroscopy mission to monitor soil properties across two study areas: Amyntaio, Greece, and Demmin, Germany. Data processing involves removing atmospheric effects and smoothing reflectance spectra. Soil properties such as soil organic carbon (SOC), clay, and carbonate content are mapped using local Partial Least Squares Regression (PLSR) and multitemporal composites. Validation is performed with ground truth datasets and spectral libraries to refine models.
+
+ADVANTAGES:
+>provides precise mapping of soil properties.
+>Large areas with high spatial resolution
+>aids global soil protection and carbon sequestration initiatives.
+>Utilizes robust regression methods and spectral libraries.
+
+DISADVANTAGES:
+>Needs extensive, resource-intensive ground data.
+>Limited ability to monitor rapid changes.
+>Affected by vegetation cover and moisture.
+
+TITLE:
+TOPSOIL PROPERTIES ESTIMATION FOR AGRICULTURE FROM PRISMA: THE TEHRA PROJECT
+
+AUTHROS:
+R.Casa, R. Bruno, V. Falcioni, L. Marrone1 S.Pascucci, S.Pignatti, S.Priori, F.Rossi, A.Tricomi, R.Guarini
+
+METHODOLOGY:
+TEHRA project utilizes hyperspectral remote sensing data from the PRISMA satellite to estimate soil properties crucial for sustainable agriculture and environmental monitoring. The methodology involves defining scenarios for soil variability, addressing the confounding effects of soil moisture and crop residues, exploiting multi-temporal PRISMA data, and integrating these with proximal soil sensing techniques. This comprehensive approach includes scenario definition studies, development of machine learning models, and data fusion techniques to enhance the accuracy of soil property estimation.
+
+ADVANTAGES:
+>High-resolution soil mapping.
+>Aids in precision farming.
+>Assists in environmental and agricultural policy enforcement.
+
+DISADVANTAGESS:
+>Requires advanced techniques.
+>Relies heavily on satellite data quality and availability.
+>Soil moisture and crop residues can affect accuracy.
+
+TITLE:Improving Leaf Area Index Estimation With Chlorophyll Insensitive Multispectral Red-Edge Vegetation Indices
+
+AUTHROS:
+Yuanheng Sun, Binyu Wang, and Zhaoxu Zhang
+
+METHODOLOGY:
+Researchers simulated canopy reflectance using the PROSAIL model, then collected field data on leaf area, chlorophyll content, and reflectance. They also acquired satellite imagery. By analyzing these datasets, they aimed to identify red-edge bands that were most sensitive to leaf area and least affected by chlorophyll content. These bands will be used in the next step to develop new methods for leaf area estimation.
+
+ADVANTAGES:
+>Red-edge bands capture subtle changes in leaf area, improving LAI estimation accuracy.
+>Unlike traditional methods, red-edge bands are less influenced by chlorophyll content, leading to more reliable results.
+
+DISADVANTAGESS:
+>May require specialized satellite data with red-edge bands (not all sensors have them).
+>New methods (Vegetation Indices) need to be developed to utilize the red-edge data effectively.
+
+TITLE:
+Using soil library hyperspectral reflectance and machine learning to predict soil organic carbon: Assessing potential of airborne and spaceborne optical soil sensing
+
+AUTHROS:
+Sheng Wang, Kaiyu Guan , Chenhui Zhang, DoKyoung Lee,Andrew J. Margenot, Yufeng Ge, Jian Peng, Wang Zhou, Qu Zhou, Yizhi Huang
+
+METHODOLOGY:
+This study employs machine learning algorithms such as PLSR, RF, KNN, Ridge, ANN, CNN, and LSTM to predict soil organic carbon (SOC) concentration using hyperspectral reflectance data from soil laboratory spectra. The methodology includes preprocessing techniques like vector normalization, continuum removal, and first-order derivative to enhance model accuracy. Additionally, simulated hyperspectral and multispectral data from airborne and spaceborne sensors are used to evaluate the models' effectiveness in real-world scenarios, considering environmental factors like soil moisture, vegetation cover, and atmospheric attenuation.
+Validation: SOC predictions were validated with ground-truth samples, using metrics like R² and RMSE to assess model accuracy.
+
+
+ADVANTAGES:
+>Machine learning models, especially deep learning techniques, provide precise SOC predictions.
+>Models can be applied to large-scale SOC quantification using remote sensing data.
+>Spectral methods are faster and more cost-effective than traditional SOC measurement techniques.
+
+DISADVANTAGESS:
+>Deep learning models require extensive data and computational resources.
+>Accuracy depends heavily on the quality and diversity of training data.
+>Predictions can be affected by surface noises such as soil moisture and vegetation cover.
+
+TITLE:
+High-Resolution Mapping of Soil Organic Matter at the Field Scale Using UAV Hyperspectral Images with a Small Calibration Dataset
+
+AUTHROS:
+Yang Yan, Jiajie Yang, Baoguo Li, Chengzhi Qin, Wenjun Ji, Yan Xu and Yuanfang Huang
+
+METHODOLOGY:
+This study used UAV hyperspectral imaging to map soil organic matter (SOM) in a low-relief black soil area in Northeast China. The UAV hyperspectral data, covering 400–1000 nm, were collected over a 20 ha field. A 100 × 100 m grid sampling strategy was employed for calibration with 20 samples, while another 20 samples were randomly collected for validation. The UAV images were processed with absorbance conversion, multiple scattering correction, Savitzky–Golay smoothing filtering, and first-order differentiation to enhance spectral data. Machine learning models, particularly the Random Forest (RF) model, were applied to predict SOM from the preprocessed spectra, achieving a spatial resolution of 1 m.
+
+ADVANTAGES:
+>UAV hyperspectral imaging provides fine spatial resolution, enabling detailed mapping of SOM.
+>Compared to traditional methods and satellite-based systems, UAV technology is more accessible and economical.
+>UAVs can quickly capture data, facilitating rapid assessment of soil conditions.
+>Combines spectral and spatial data, offering a richer dataset for analysis.
+
+DISADVANTAGESS:
+>UAVs have restricted flight times and coverage areas, making them less suitable for large-scale mapping.
+>Data quality can be affected by factors like soil moisture, vegetation cover, and atmospheric conditions.
+>Requires advanced preprocessing techniques and expertise to handle spectral noise and calibration.
+
+
