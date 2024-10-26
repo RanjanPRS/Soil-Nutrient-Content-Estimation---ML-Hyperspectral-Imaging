@@ -15,7 +15,7 @@ print("Unique values in OC before any processing:", df['OC'].unique())
 
 # If OC is already numeric, you may skip the mapping step
 # Check if mapping is necessary
-if df['OC'].dtype == 'object':  # Only map if OC is of type object (string)
+if df['OC'].dtype == 'object':  # map if OC is of type str
     df['OC'] = df['OC'].map({'LOW': 0, 'MEDIUM': 1, 'HIGH': 2})
 
 # Check for NaN values after mapping
@@ -33,10 +33,9 @@ if df.shape[0] > 0:
     # Relevant wavelength and reflectance columns
     X = df[[927, 2396, 382, 2007, 1453, 2216, 2402, 380, 904, 2213, 2491, 876, 474, 1456, 2005]]  # Wavelength columns
 
-    # Target variable (OC only)
-    y = df[['OC']]  # Only target OC
-
-    # Split the dataset into training and testing sets
+    # Target variable-OC
+    y = df[['OC']]
+    # Split dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Standardize the features
@@ -44,8 +43,8 @@ if df.shape[0] > 0:
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # Apply PLSR with an increased number of components
-    n_components = 5  # Increase the number of components
+    # Apply PLSR with any no. of components
+    n_components = 10  # Increase the number of components for model fine tuning
     pls = PLSRegression(n_components=n_components)
     pls.fit(X_train_scaled, y_train)
 
@@ -66,5 +65,3 @@ if df.shape[0] > 0:
     plt.title("True vs. Predicted OC Values")
     plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)  # Diagonal line
     plt.show()
-else:
-    print("No valid samples left after processing. Please check your data.")
