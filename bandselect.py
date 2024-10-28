@@ -17,7 +17,7 @@ numeric_columns = df.columns[df.columns.str.isdigit()]
 
 # Use the numeric columns as string
 wavelengths = numeric_columns  
-reflectance_values_cleaned = pd.to_numeric(df.loc[df['Sample Code'] == 'RP-6B', wavelengths].values.flatten(), errors='coerce')
+reflectance_values_cleaned = pd.to_numeric(df.loc[df['Sample Code'] == 'RP-22A', wavelengths].values.flatten(), errors='coerce')
 
 # Process the reflectance values to find dips
 inverted_signal = -reflectance_values_cleaned
@@ -37,7 +37,7 @@ top_bands = average_reflectance.nlargest(10)
 plt.figure(figsize=(12, 6))
 plt.plot(wavelengths.astype(int), reflectance_values_cleaned, label='Reflectance Spectrum', color='blue')  
 plt.scatter(dips_wavelengths.astype(int), dips_values, color='red', label='Dips', zorder=5)  
-plt.title('Reflectance Spectrum for RP-6B with Identified Dips')  
+plt.title('Reflectance Spectrum for RP-22A with Identified Dips')  
 plt.xlabel('Wavelength (nm)')  
 plt.ylabel('Reflectance')  
 plt.legend()  

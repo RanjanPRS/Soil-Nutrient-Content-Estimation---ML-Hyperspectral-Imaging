@@ -6,19 +6,18 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, explained_variance_score
 import matplotlib.pyplot as plt
 
-# Load the dataset
+# Loads dataset
 file_path = '/home/user/Documents/FYP/SPLIT_N_P_K_LOW_MEDIUM_HIGH.xlsx'
 df = pd.read_excel(file_path)
 
-# Mapping and dropping NaNs for 'OC'
-if df['OC'].dtype == 'object': 
-    df['OC'] = df['OC'].map({'LOW': 0, 'MEDIUM': 1, 'HIGH': 2})
-df = df.dropna(subset=['OC'])
+# Mapping and dropping NaNs for 'K'
+if df['N'].dtype == 'object': 
+    df['N'] = df['N'].map({'LOW': 0, 'Low1': 1})
+df = df.dropna(subset=['N'])
 
 # Selecting relevant features and target variable
-X = df[[927, 2396, 382, 2007, 1453, 2216, 2402, 380, 904, 2213, 2491, 876, 474, 1456, 2005]]
-print(len(X))
-y = df['OC']
+X = df[[2213,2500,2003,1454,915,451,372,2215,1456,2464,1000,463]]
+y = df['N']
 
 # Splitting and scaling the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
@@ -46,8 +45,8 @@ print(f"Explained Variance Score: {evs}")
 
 # Plot True vs. Predicted values
 plt.scatter(y_test, y_pred, alpha=0.5)
-plt.xlabel("True OC Values")
-plt.ylabel("Predicted OC Values")
-plt.title("True vs. Predicted OC Values")
+plt.xlabel("True N Values")
+plt.ylabel("Predicted N Values")
+plt.title("True vs. Predicted N Values")
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)
 plt.show()

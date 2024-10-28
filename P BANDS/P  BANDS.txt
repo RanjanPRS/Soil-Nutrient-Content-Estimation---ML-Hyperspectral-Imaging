@@ -1,0 +1,26 @@
+P LOW BANDS (wavelength and reflectance values):
+
+1. 2007		0.3012
+2. 2396		0.2267
+3. 1453		0.3454
+4. 911 		0.2741
+5. 474		0.0739
+6. 390		0.0537
+
+P MEDIUM BANDS (wavelength and reflectance values):
+
+1. 2213		0.2456
+2. 2396		0.2490
+3. 2501		0.2122
+4. 1456		0.3179
+5. 904		0.2741
+6. 471		0.0717
+7. 375		0.0453
+
+P HIGH BANDS (wavelength and reflectance values):
+
+1. 2216		0.2125
+2. 2399		0.2119
+3. 1453		0.2935
+4. 1005		0.2443
+5. 357		0.0357
