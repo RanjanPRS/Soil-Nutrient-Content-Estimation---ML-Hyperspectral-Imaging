@@ -1,53 +1,73 @@
-import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, explained_variance_score
+from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, classification_report
 import matplotlib.pyplot as plt
 
 # Load the dataset
 file_path = '/home/user/Documents/FYP/SPLIT_N_P_K_LOW_MEDIUM_HIGH.xlsx'
 df = pd.read_excel(file_path)
 
-# Mapping and dropping NaNs for 'OC'
-if df['OC'].dtype == 'object': 
-    df['OC'] = df['OC'].map({'LOW': 0, 'MEDIUM': 1, 'HIGH': 2})
-df = df.dropna(subset=['OC'])
+# Drop rows with missing 'OC' values
+df_cleaned = df.dropna(subset=['OC'])
 
-# Selecting relevant features and target variable
-X = df[[927, 2396, 382, 2007, 1453, 2216, 2402, 380, 904, 2213, 2491, 876, 474, 1456, 2005]]
-print(len(X))
-y = df['OC']
+# Define relevant wavelength columns
+selected_columns = [363, 352, 358, 356, 353, 355]
 
-# Splitting and scaling the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
+# Prepare features (X) and target (y)
+X = df_cleaned[selected_columns]
+y = df_cleaned['OC']
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize the features
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Re-train the model with optimal n_components
-pls = PLSRegression(n_components=6)
+# Apply Partial Least Squares Regression (PLSR)
+n_components = 2  # Adjust the number of components if necessary
+pls = PLSRegression(n_components=n_components)
 pls.fit(X_train_scaled, y_train)
 
-# Predict and evaluate
-y_pred = pls.predict(X_test_scaled)
+# Predict on the test set
+y_pred = pls.predict(X_test_scaled).flatten()  # Flatten to 1D array
+
+# Evaluate the regression model
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
-mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mse)
-evs = explained_variance_score(y_test, y_pred)
 
 print(f"Mean Squared Error: {mse}")
 print(f"R-squared: {r2}")
-print(f"Mean Absolute Error: {mae}")
-print(f"Root Mean Squared Error: {rmse}")
-print(f"Explained Variance Score: {evs}")
 
-# Plot True vs. Predicted values
-plt.scatter(y_test, y_pred, alpha=0.5)
+# Visualize the regression results
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.6, label="Predictions")
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', label="Ideal Fit")
 plt.xlabel("True OC Values")
 plt.ylabel("Predicted OC Values")
-plt.title("True vs. Predicted OC Values")
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)
+plt.title(f"Regression Results\nMSE: {mse:.4f}, R-squared: {r2:.4f}")
+plt.legend()
 plt.show()
+
+# Define thresholds for classification
+def categorize_oc(value):
+    if value < 0.33:
+        return 0  # LOW
+    elif value < 0.66:
+        return 1  # MEDIUM
+    else:
+        return 2  # HIGH
+
+# Apply thresholds to predicted and true values
+y_pred_categorical = [categorize_oc(val) for val in y_pred]
+y_test_categorical = [categorize_oc(val) for val in y_test]
+
+# Calculate accuracy and generate a classification report
+accuracy = accuracy_score(y_test_categorical, y_pred_categorical)
+report = classification_report(y_test_categorical, y_pred_categorical, target_names=["LOW", "MEDIUM", "HIGH"])
+
+print(f"Classification Accuracy: {accuracy}")
+print("\nClassification Report:\n", report)
