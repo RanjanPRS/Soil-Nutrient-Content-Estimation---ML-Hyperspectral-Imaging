@@ -28,29 +28,29 @@ train_band_names = [col for col in train_df.columns if col.replace('.', '', 1).i
 
 # Find common features (bands that exist in both datasets)
 common_features = list(set(train_band_names) & set(test_df.columns))
-if "OC" in common_features:
-    common_features.remove("OC")  # Remove target variable
+if "K" in common_features:
+    common_features.remove("K")  # Remove target variable
 
 if len(common_features) == 0:
     raise ValueError("No matching spectral bands found! Verify dataset formats and column naming.")
 
 print(f"Common Features Found: {len(common_features)} bands")
 
-# Define X and Y for training
+# Define X and Y for training (Target is now 'K')
 X_train = train_df[common_features]
-y_train = train_df["OC"]
+y_train = train_df["K"]
 
-# Categorize OC values based on predefined thresholds
+# Categorize K values based on predefined thresholds
 thresholds = {
     "Low": y_train.min(),
     "Medium": y_train.mean(),
     "High": y_train.max()
 }
 
-def categorize_oc(value):
+def categorize_k(value):
     return min(thresholds, key=lambda x: abs(thresholds[x] - value))
 
-y_train_category = y_train.apply(categorize_oc)
+y_train_category = y_train.apply(categorize_k)
 
 # Apply MinMax Scaling
 scaler = MinMaxScaler()
@@ -76,8 +76,8 @@ y_val_pred_rf = rf_model.predict(X_val)
 test_y_pred_xgb = xgb_model.predict(X_test_scaled)
 test_y_pred_rf = rf_model.predict(X_test_scaled)
 
-test_predicted_categories_xgb = [categorize_oc(oc) for oc in test_y_pred_xgb]
-test_predicted_categories_rf = [categorize_oc(oc) for oc in test_y_pred_rf]
+test_predicted_categories_xgb = [categorize_k(k) for k in test_y_pred_xgb]
+test_predicted_categories_rf = [categorize_k(k) for k in test_y_pred_rf]
 
 # Evaluate Model Performance
 r2_xgb = r2_score(y_val, y_val_pred_xgb)
@@ -91,30 +91,30 @@ print(f"\nRandom Forest Performance:\nR² Score: {r2_rf:.4f}\nMSE: {mse_rf:.4f}"
 
 # Save Predictions
 test_predictions = pd.DataFrame({
-    "Predicted_OC_XGBoost": test_y_pred_xgb,
+    "Predicted_K_XGBoost": test_y_pred_xgb,
     "Predicted_Category_XGBoost": test_predicted_categories_xgb,
-    "Predicted_OC_RandomForest": test_y_pred_rf,
+    "Predicted_K_RandomForest": test_y_pred_rf,
     "Predicted_Category_RandomForest": test_predicted_categories_rf
 })
-test_predictions.to_excel("Predicted_OC_PRISMA.xlsx", index=False)
-print("Predictions saved as Predicted_OC_PRISMA.xlsx")
+test_predictions.to_excel("Predicted_K_PRISMA.xlsx", index=False)
+print("Predictions saved as Predicted_K_PRISMA.xlsx")
 
 # Plot Actual vs Predicted
 plt.figure(figsize=(10, 5))
 plt.scatter(y_val, y_val_pred_xgb, alpha=0.6, label="XGBoost Predictions")
 plt.plot([min(y_val), max(y_val)], [min(y_val), max(y_val)], 'r--', label="Perfect Prediction Line")
-plt.xlabel("Actual OC Values")
-plt.ylabel("Predicted OC Values")
-plt.title("XGBoost: Predicted vs Actual Organic Content")
+plt.xlabel("Actual K Values")
+plt.ylabel("Predicted K Values")
+plt.title("XGBoost: Predicted vs Actual Potassium Content")
 plt.legend()
 plt.show()
 
 plt.figure(figsize=(10, 5))
 plt.scatter(y_val, y_val_pred_rf, alpha=0.6, label="Random Forest Predictions", color="green")
 plt.plot([min(y_val), max(y_val)], [min(y_val), max(y_val)], 'r--', label="Perfect Prediction Line")
-plt.xlabel("Actual OC Values")
-plt.ylabel("Predicted OC Values")
-plt.title("Random Forest: Predicted vs Actual Organic Content")
+plt.xlabel("Actual K Values")
+plt.ylabel("Predicted K Values")
+plt.title("Random Forest: Predicted vs Actual Potassium Content")
 plt.legend()
 plt.show()
 
